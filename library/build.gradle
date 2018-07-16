@@ -39,4 +39,17 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:1.0.2'
 }
 
+task deleteJar(type: Delete) {
+    delete 'libs/jars/logmanagementlib.jar'
+}
+
+task createJar(type: Copy) {
+    from('build/intermediates/intermediate-jars/release/')
+    into('libs/jars/')
+    include('classes.jar')
+    rename('classes.jar', 'material-date-time-picker.jar')
+}
+
+createJar.dependsOn(deleteJar, build)
+
 apply from: 'gradle-mvn-push.gradle'
